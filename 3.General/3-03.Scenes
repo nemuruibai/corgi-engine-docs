@@ -1,0 +1,111 @@
+# Scenes
+
+> This page explains how to setup scenes and how to go from one to the other.
+
+- [Introduction](#introduction)[](#introduction)
+- [Going to another scene with the Loading Scene Manager](#going-to-another-scene-with-the-loading-scene-manager)
+- [Level Selection](#level-selection)
+- [Character Selection](#character-selection)
+- [Rooms inside a scene](#rooms-inside-a-scene)
+- [Moving to a certain point in another scenes](#moving-to-a-certain-point-in-another-scenes)
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/KSi5TsVD3JA/0.jpg)](https://youtu.be/KSi5TsVD3JA "Corgi Engine Tutorial : Scenes")
+
+## Introduction
+
+Your game is very likely gonna be made of multiple levels, or sections. In the Corgi Engine, just like in Unity in general, there are multiple ways you can structure your levels. The most straigthforward way to do it is to create a scene per level, and have a door/gate/finish line at the end of your level that leads to the next level, but you can also create multiple sections within a single scene. On top of that, the engine comes with ways to link your levels, save data over them, create level selection screens and character selection screens. This page covers all that.
+
+## Going to another scene with the Loading Scene Manager[](#going-to-another-scene-with-the-loading-scene-manager)
+
+With Unity, usually when you want to go to another scene (in a menu, or to go from one level to the next for example), you’d use the **SceneManager API**, and probably the SceneManager.LoadScene() method. The engine comes with its own scene change API, that you’re completely free **not to use** if you don’t like it. Personnally I think that this method doesn’t provide visual feedback to the player, and scene loading on mobile for example can be a few seconds long, so just having a black screen there **isn’t really good looking**.
+
+![The LoadingScene in scene view](images/managers-1.jpg)
+
+The LoadingScene in scene view
+
+If you want to provide a better experience to your player, you can use the **Loading Scene Manager** :
+
+*   it can be called from **anywhere**, you don’t have to have a LoadingSceneManager in your scene
+*   it handles loading (as the name implies), showing an **animation** and a **progress bar**
+*   it’s completely **customizable**, just edit the Common/LoadingScene scene’s contents. You can easily add your own logo, change the look of the progress bar, what animation is playing, etc.
+*   it’s pretty **simple** to use
+
+To use the LoadingSceneManager API, when you want to change level, just call the LoadingSceneManager.LoadScene (string sceneToLoad) method. The string parameter you pass must of course **match** the name of the scene you’re trying to load. So if you were to load the minimal demo multiplayer level for example, you’d use :
+
+    LoadingSceneManager.LoadScene ("Minimal4Players");
+    
+
+And the engine will take care of the rest ![:rocket:](https://github.githubassets.com/images/icons/emoji/unicode/1f680.png ":rocket:")
+
+## Level Selection
+
+The engine comes with two built in examples of level selection. One is a carousel containing cards showing info about each level, and you can see it in action in the RetroAdventureLevelSelection scene, as well as in the LevelSelection demo scene. The other is a Mario World style map, available for demo in the LevelSelectionMap scene. Both of these are fairly simple in terms of logic, simply using the LoadingSceneManager to go to the selected level.
+
+## Character Selection
+
+You may want to tell the level you’re going to what character to use, based on a player selection. The RetroAdventureCharacterSelection shows an example of that. The way it works is that once that choice has been made, the selected character gets stored in the GameManager, a persistent object that will live for the duration of the game session (until you quit the game). This means that once a character is selected, that selection will remain for all levels, unless told otherwise.
+
+## Rooms inside a scene
+
+In certain situations, it might be a good idea to create different sections within a bigger scene. In this case, you’ll want to use the Teleporter component. You can see it in action in many of the demo levels, and a focus on that in the MinimalRooms1 demo scene. It’s quite simple to use, you just need two of them (or more) in your scene, you link them via their inspector, define their behaviour, and you’re good to go.
+
+## Moving to a certain point in another scenes
+
+The engine also allows you to link different scenes together and specify where to start in each scene, based on where you’re coming from. Maybe you climbed to the top of scene A, and there’s a door there that sends you to Scene B. But there may also be a door at the bottom of scene A that sends you to scene C. And once you’re in SceneB you want to go back to the top of A, etc. That’s exactly what the MinimalRooms1 and MinimalRooms2 demo scenes demonstrate. They use the GoToLevelEntryPoint component. It’s quite easy to use but requires some setup. First you need to create Entry Points in your target level (if you’re in Scene A and want to go to Scene B, your target level is Scene B). To create Entry Points in Scene B, just create and position empty objects, or pick existing ones (checkpoints for example). Then select your Scene B’s SceneManager, and in its inspector, define how many points of entry you want for this scene, and bind them there one by one. Once this is done, go back to Scene A, create a door/object with a GoToLevelEntryPoint script on it. Set its various activation conditions and settings however you prefer, set the Level Name accordingly (Scene B in our example), and set the point of entry index for this object. Remember, indexes start at 0. So if you have 3 entry points in SceneB’s LevelManager, index 0 is the first point in that list, index 1 is the second, and so on. And that’s it, you’re good to go!
+
+-------
+
+# Scenes
+
+> This page explains how to setup scenes and how to go from one to the other.
+
+- [Introduction](#introduction)[](#introduction)
+- [Going to another scene with the Loading Scene Manager](#going-to-another-scene-with-the-loading-scene-manager)
+- [Level Selection](#level-selection)
+- [Character Selection](#character-selection)
+- [Rooms inside a scene](#rooms-inside-a-scene)
+- [Moving to a certain point in another scenes](#moving-to-a-certain-point-in-another-scenes)
+
+## Introduction
+
+Your game is very likely gonna be made of multiple levels, or sections. In the Corgi Engine, just like in Unity in general, there are multiple ways you can structure your levels. The most straigthforward way to do it is to create a scene per level, and have a door/gate/finish line at the end of your level that leads to the next level, but you can also create multiple sections within a single scene. On top of that, the engine comes with ways to link your levels, save data over them, create level selection screens and character selection screens. This page covers all that.
+
+## Going to another scene with the Loading Scene Manager[](#going-to-another-scene-with-the-loading-scene-manager)
+
+With Unity, usually when you want to go to another scene (in a menu, or to go from one level to the next for example), you’d use the **SceneManager API**, and probably the SceneManager.LoadScene() method. The engine comes with its own scene change API, that you’re completely free **not to use** if you don’t like it. Personnally I think that this method doesn’t provide visual feedback to the player, and scene loading on mobile for example can be a few seconds long, so just having a black screen there **isn’t really good looking**.
+
+![The LoadingScene in scene view](images/managers-1.jpg)
+
+The LoadingScene in scene view
+
+If you want to provide a better experience to your player, you can use the **Loading Scene Manager** :
+
+*   it can be called from **anywhere**, you don’t have to have a LoadingSceneManager in your scene
+*   it handles loading (as the name implies), showing an **animation** and a **progress bar**
+*   it’s completely **customizable**, just edit the Common/LoadingScene scene’s contents. You can easily add your own logo, change the look of the progress bar, what animation is playing, etc.
+*   it’s pretty **simple** to use
+
+To use the LoadingSceneManager API, when you want to change level, just call the LoadingSceneManager.LoadScene (string sceneToLoad) method. The string parameter you pass must of course **match** the name of the scene you’re trying to load. So if you were to load the minimal demo multiplayer level for example, you’d use :
+
+    LoadingSceneManager.LoadScene ("Minimal4Players");
+    
+
+And the engine will take care of the rest ![:rocket:](https://github.githubassets.com/images/icons/emoji/unicode/1f680.png ":rocket:")
+
+## Level Selection
+
+The engine comes with two built in examples of level selection. One is a carousel containing cards showing info about each level, and you can see it in action in the RetroAdventureLevelSelection scene, as well as in the LevelSelection demo scene. The other is a Mario World style map, available for demo in the LevelSelectionMap scene. Both of these are fairly simple in terms of logic, simply using the LoadingSceneManager to go to the selected level.
+
+## Character Selection
+
+You may want to tell the level you’re going to what character to use, based on a player selection. The RetroAdventureCharacterSelection shows an example of that. The way it works is that once that choice has been made, the selected character gets stored in the GameManager, a persistent object that will live for the duration of the game session (until you quit the game). This means that once a character is selected, that selection will remain for all levels, unless told otherwise.
+
+## Rooms inside a scene
+
+In certain situations, it might be a good idea to create different sections within a bigger scene. In this case, you’ll want to use the Teleporter component. You can see it in action in many of the demo levels, and a focus on that in the MinimalRooms1 demo scene. It’s quite simple to use, you just need two of them (or more) in your scene, you link them via their inspector, define their behaviour, and you’re good to go.
+
+## Moving to a certain point in another scenes
+
+The engine also allows you to link different scenes together and specify where to start in each scene, based on where you’re coming from. Maybe you climbed to the top of scene A, and there’s a door there that sends you to Scene B. But there may also be a door at the bottom of scene A that sends you to scene C. And once you’re in SceneB you want to go back to the top of A, etc. That’s exactly what the MinimalRooms1 and MinimalRooms2 demo scenes demonstrate. They use the GoToLevelEntryPoint component. It’s quite easy to use but requires some setup. First you need to create Entry Points in your target level (if you’re in Scene A and want to go to Scene B, your target level is Scene B). To create Entry Points in Scene B, just create and position empty objects, or pick existing ones (checkpoints for example). Then select your Scene B’s SceneManager, and in its inspector, define how many points of entry you want for this scene, and bind them there one by one. Once this is done, go back to Scene A, create a door/object with a GoToLevelEntryPoint script on it. Set its various activation conditions and settings however you prefer, set the Level Name accordingly (Scene B in our example), and set the point of entry index for this object. Remember, indexes start at 0. So if you have 3 entry points in SceneB’s LevelManager, index 0 is the first point in that list, index 1 is the second, and so on. And that’s it, you’re good to go!
+
+-------
