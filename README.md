@@ -28,7 +28,7 @@ Corgi Engine 的**简体中文文档**，Corgi Engine 是一款适用于 Unity �
 * [3-3.Scenes](/3.General/3-03.Scenes.md)
 * [3-4.Managers](/3.General/3-04.Managers.md)
 * [3-5.碰撞](/3.General/3-05.碰撞.md)
-* [3-7.Moving Platforms](3-07.Moving-Platforms.md)
+* [3-7.Moving Platforms](3-07.Moving Platforms.md)
 * [3-8.Feedback](/3.General/3-08.Feedback.md)
 * [3-13.Keys, doors and chests](/3.General/3-13.Keys%2C%20doors%20and%20chests.md)
 
